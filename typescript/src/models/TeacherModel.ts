@@ -1,16 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
-import { StudentModel } from './StudentModel';
-import { ClassroomModel } from './ClassroomModel';
-import { SubjectModel } from './SubjectModel';
-import { ClassModel } from './ClassModel';
+import { Class } from './ClassModel';
+import { Subject } from './SubjectModel';
+import { Classroom } from './ClassroomModel';
 
 export interface TeacherAttr {
     name: string;
     email: string;
 }
 
-export class TeacherModel extends Model {
+export class Teacher extends Model {
     public name!: string;
     public email!: string;
 
@@ -18,12 +17,12 @@ export class TeacherModel extends Model {
     public readonly updatedAt!: Date;
 }
 
-TeacherModel.init({
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
+Teacher.init({
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -32,4 +31,5 @@ TeacherModel.init({
     type: DataTypes.STRING,
     allowNull: false
   }
-}, { sequelize, modelName: 'teacher', tableName: 'teacher', freezeTableName: true, timestamps: true });
+}, { sequelize, modelName: 'teacher', freezeTableName: true, timestamps: true });
+

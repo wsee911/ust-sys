@@ -1,16 +1,16 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
-import { TeacherModel } from './TeacherModel';
-import { StudentModel } from './StudentModel';
-import { ClassModel } from './ClassModel';
-import { SubjectModel } from './SubjectModel';
+import { Teacher } from './TeacherModel';
+import { Student } from './StudentModel';
+import { Class } from './ClassModel';
+import { Subject } from './SubjectModel';
 
 export interface ClassroomAttr {
     teacherId: number;
     studentId: number;
 }
 
-export class ClassroomModel extends Model {
+export class Classroom extends Model {
     public teacherId!: number;
     public studentId!: number;
     public classId!: number;
@@ -20,7 +20,7 @@ export class ClassroomModel extends Model {
     public readonly updatedAt!: Date;
 }
 
-ClassroomModel.init({
+Classroom.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -29,37 +29,37 @@ ClassroomModel.init({
   teacherId: {
     type: DataTypes.INTEGER,
     references: {
-      model: TeacherModel,
+      model: Teacher,
       key: 'id'
     }
   },
   studentId: {
     type: DataTypes.INTEGER,
     references: {
-        model: StudentModel,
+        model: Student,
         key: 'id'
       }
   },
   classId: {
     type: DataTypes.INTEGER,
     references: {
-        model: ClassModel,
+        model: Class,
         key: 'id'
       }
   },
   subjectId: {
     type: DataTypes.INTEGER,
     references: {
-        model: SubjectModel,
+        model: Subject,
         key: 'id'
       }
   }
 }, { sequelize, modelName: 'classroom', tableName: 'classroom', freezeTableName: true });
 
-TeacherModel.belongsToMany(StudentModel, {through: ClassroomModel, foreignKey: 'teacherId'});
-TeacherModel.belongsToMany(SubjectModel, {through: ClassroomModel, foreignKey: 'teacherId'});
-TeacherModel.belongsToMany(ClassModel, {through: ClassroomModel, foreignKey: 'teacherId'});
+Class.belongsToMany(Student, {through: Classroom, foreignKey: 'classId'});
+Class.belongsToMany(Subject, {through: Classroom, foreignKey: 'classId'});
+Class.belongsToMany(Teacher, {through: Classroom, foreignKey: 'classId'});
 
-StudentModel.belongsToMany(TeacherModel, {through: ClassroomModel, foreignKey: 'studentId'});
-SubjectModel.belongsToMany(TeacherModel, {through: ClassroomModel, foreignKey: 'subjectId'});
-ClassModel.belongsToMany(TeacherModel, {through: ClassroomModel, foreignKey: 'classId'});
+Student.belongsToMany(Class, {through: Classroom, foreignKey: 'studentId'});
+Subject.belongsToMany(Class, {through: Classroom, foreignKey: 'subjectId'});
+Teacher.belongsToMany(Class, {through: Classroom, foreignKey: 'teacherId'});
