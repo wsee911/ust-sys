@@ -10,6 +10,8 @@ const { PORT = 3000 } = process.env;
 const startApplication = async (retryCount: number) => {
   try {
     await sequelize.authenticate();
+    await sequelize.sync({ force: true });
+    console.log("All models were synchronized successfully.");
     App.listen(PORT, () => {
       LOG.info(`Application started at http://localhost:${PORT}`);
     });
