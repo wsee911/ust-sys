@@ -1,7 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
-import { Class } from './ClassModel';
-import { Classroom } from './ClassroomModel';
 
 export interface StudentAttr {
 		name: string;
@@ -17,17 +15,13 @@ export class Student extends Model {
 }
 
 Student.init({
-	id: {
-		type: DataTypes.INTEGER,
-		autoIncrement: true,
-		primaryKey: true,
-	},
 	name: {
 		type: DataTypes.STRING,
 		allowNull: false
 	},
 	email: {
 		type: DataTypes.STRING,
-		allowNull: false
+		allowNull: false,
+		primaryKey: true,
 	}
 }, { sequelize, modelName: 'student', freezeTableName: true, timestamps: true });

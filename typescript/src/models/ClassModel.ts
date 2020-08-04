@@ -1,7 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
-import { Classroom } from './ClassroomModel';
-import { Teacher } from './TeacherModel';
 
 export interface ClassAttr {
     name: string;
@@ -17,17 +15,13 @@ export class Class extends Model {
 }
 
 Class.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
   name: {
     type: DataTypes.STRING,
     allowNull: false
   },
   code: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    primaryKey: true,
   }
 }, { sequelize, modelName: 'class', freezeTableName: true, timestamps: true });
