@@ -4,7 +4,7 @@ export interface CsvItem {
   studentEmail: string;
   studentName: string;
   classCode: string;
-  classname: string;
+  className: string;
   subjectCode: string;
   subjectName: string;
   toDelete: string;
