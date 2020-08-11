@@ -1,4 +1,5 @@
 import { Student } from "../models";
+import { Transaction } from "sequelize/types";
 
 export class StudentService {
 	public async createStudent(name: string, email: string): Promise<{ student: Student, created: boolean }> {
@@ -11,9 +12,9 @@ export class StudentService {
 		return { student, created };
 	}
 
-	public async updateStudent(name: string, email: string): Promise<Student[]> {
+	public async updateStudent(name: string, email: string): Promise<number> {
 		const [updatedRows, student] = await Student.update({ name }, { where: { email } });
-		return student;
+		return updatedRows;
 	}
 
 }

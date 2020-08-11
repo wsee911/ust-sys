@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
+import { Student, Class, Subject } from '.';
 
 export interface TeacherAttr {
     name: string;
@@ -25,4 +26,3 @@ Teacher.init({
     primaryKey: true,
   }
 }, { sequelize, modelName: 'teacher', freezeTableName: true, timestamps: true });
-

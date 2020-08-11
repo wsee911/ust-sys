@@ -1,4 +1,5 @@
 import { Class } from "../models";
+import { Transaction } from "sequelize/types";
 
 export class ClassService {
 	public async createClass(name: string, code: string): Promise<{ classModel: Class, created: boolean }> {
@@ -11,9 +12,9 @@ export class ClassService {
 		return { classModel, created };
 	}
 
-	public async updateClass(name: string, code: string): Promise<Class[]> {
-		const [updatedRows, classModel] = await Class.update({ name }, { where: { code } });
-		return classModel;
+	public async updateClass(name: string, code: string): Promise<number> {
+		const [updatedRows] = await Class.update({ name }, { where: { code } });
+		return updatedRows;
 	}
 
 }

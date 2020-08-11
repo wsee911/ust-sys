@@ -57,29 +57,3 @@ Classroom.init({
       }
   }
 }, { sequelize, modelName: 'classroom', tableName: 'classroom', freezeTableName: true });
-
-Class.belongsToMany(Student, {through: Classroom, foreignKey: 'classCode'});
-Class.belongsToMany(Teacher, {through: Classroom, foreignKey: 'classCode'});
-Class.belongsToMany(Subject, {through: Classroom, foreignKey: 'classCode'});
-
-Student.belongsToMany(Class, {through: Classroom, foreignKey: 'studentEmail'});
-Student.belongsToMany(Teacher, {through: Classroom, foreignKey: 'studentEmail'});
-Student.belongsToMany(Subject, {through: Classroom, foreignKey: 'studentEmail'});
-
-Teacher.belongsToMany(Class, {through: Classroom, foreignKey: 'teacherEmail'});
-Teacher.belongsToMany(Subject, {through: Classroom, foreignKey: 'teacherEmail'});
-Teacher.belongsToMany(Student, {through: Classroom, foreignKey: 'teacherEmail'});
-
-Subject.belongsToMany(Class, {through: Classroom, foreignKey: 'subjectCode'});
-Subject.belongsToMany(Student, {through: Classroom, foreignKey: 'subjectCode'});
-Subject.belongsToMany(Teacher, {through: Classroom, foreignKey: 'subjectCode'});
-
-Class.hasMany(Classroom);
-Subject.hasMany(Classroom);
-Student.hasMany(Classroom);
-Teacher.hasMany(Classroom);
-
-Classroom.belongsTo(Class);
-Classroom.belongsTo(Subject);
-Classroom.belongsTo(Student);
-Classroom.belongsTo(Teacher);
