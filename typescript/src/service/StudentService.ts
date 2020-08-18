@@ -1,12 +1,12 @@
 import { Student } from "../models";
-import { Transaction } from "sequelize/types";
 
 export class StudentService {
-	public async createStudent(name: string, email: string): Promise<{ student: Student, created: boolean }> {
+	public async createStudent(name: string, email: string, classCode: string): Promise<{ student: Student, created: boolean }> {
 		const [student, created] = await Student.findOrCreate({
 			where: { email },
 			defaults: {
 				name,
+				classCode,
 			}
 		});
 		return { student, created };
@@ -17,4 +17,13 @@ export class StudentService {
 		return updatedRows;
 	}
 
+	public async updateStudentClass(classCode: string, email: string): Promise<number> {
+		const [updatedRows, student] = await Student.update({ classCode }, { where: { email } });
+		return updatedRows;
+	}
+
+	public async fetchStudentList(classCode: string): Promise<Student[]> {
+		const students = await Student.findAll({ where: { classCode }, attributes: ["id", "name", "email"] });
+		return students;
+	}
 }
