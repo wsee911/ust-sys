@@ -4,4 +4,3 @@ export { Subject } from '../models/SubjectModel';
 export { Class } from '../models/ClassModel';
 export { TeacherSubject } from '../models/TeacherSubjectModel';
 export { TeacherStudent } from '../models/TeacherStudentModel';
-export { TeacherClass } from '../models/TeacherClassModel';

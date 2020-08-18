@@ -15,6 +15,27 @@ export const convertCsvToJson = (filePath: string): Promise<CsvItem[]> => {
   });
 }
 
-export const isNewValue = (checkVal: string, model: Teacher | Student | Subject | Class): boolean => {
-  return (checkVal !== model.get('name'));
+export const isNewValue = (checkVal: string, attr: string, model: Teacher | Student | Subject | Class): boolean => {
+
+  console.log(`${checkVal} --- ${model.get(attr)}`);
+  return (checkVal !== model.get(attr));
+}
+
+export const dynamicSort = (property: string, order: string) => {
+  var sort_order = 1;
+  if (order === "desc") {
+    sort_order = -1;
+  }
+  return (a: any, b: any) => {
+    // a should come before b in the sorted order
+    if (a[property] < b[property]) {
+      return -1 * sort_order;
+      // a should come after b in the sorted order
+    } else if (a[property] > b[property]) {
+      return 1 * sort_order;
+      // a and b are the same
+    } else {
+      return 0 * sort_order;
+    }
+  }
 }

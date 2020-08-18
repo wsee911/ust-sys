@@ -1,5 +1,4 @@
 import { Subject } from "../models";
-import { Transaction } from "sequelize/types";
 
 export class SubjectService {
 	public async createSubject(name: string, code: string): Promise<{ subject: Subject, created: boolean }> {
