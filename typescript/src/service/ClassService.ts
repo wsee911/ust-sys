@@ -1,5 +1,4 @@
 import { Class } from "../models";
-import { Transaction } from "sequelize/types";
 
 export class ClassService {
 	public async createClass(name: string, code: string): Promise<{ classModel: Class, created: boolean }> {

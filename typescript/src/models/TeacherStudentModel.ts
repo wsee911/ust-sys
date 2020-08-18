@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
-import { Teacher, Student } from '.';
+import { Teacher, Student, Class } from '.';
 
 export interface TeacherStudentAttr {
     teacherEmail: string;
@@ -41,3 +41,5 @@ TeacherStudent.belongsTo(Student);
 
 Teacher.hasMany(TeacherStudent);
 TeacherStudent.belongsTo(Teacher);
+
+Class.hasMany(Student, { foreignKey: "classCode", sourceKey: "code" });
