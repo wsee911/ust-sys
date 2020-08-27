@@ -1,7 +1,7 @@
 import Express, { RequestHandler } from 'express';
+import { CREATED, NOT_FOUND } from 'http-status-codes';
 import Logger from '../config/logger';
 import { ClassService } from '../service';
-import { CREATED, NOT_FOUND } from 'http-status-codes';
 
 const UpdateClassNameController = Express.Router();
 const LOG = new Logger('UpdateClassNameController.js');

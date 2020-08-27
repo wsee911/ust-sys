@@ -1,15 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
+import { Subject, Teacher, Class } from '.';
 import sequelize from '../config/database';
-import { Teacher, Subject } from '.';
 
 export interface TeacherSubjectAttr {
-    teacherEmail: string;
-    subjectCode: string;
+    teacherId: string;
+    subjectId: string;
 }
 
 export class TeacherSubject extends Model {
-    public teacherEmail!: string;
-    public subjectCode!: string;
+    public teacherId!: string;
+    public subjectId!: string;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -20,23 +20,17 @@ TeacherSubject.init({
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-    },
-    teacherEmail: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    subjectCode: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true,
     }
 }, { sequelize, modelName: 'TeacherSubject', freezeTableName: true, timestamps: true });
 
-Teacher.belongsToMany(Subject, { through: 'TeacherSubject' });
-Subject.belongsToMany(Teacher, { through: 'TeacherSubject' });
+Teacher.belongsToMany(Subject, { through: { model: 'TeacherSubject', unique: false } });
+Subject.belongsToMany(Teacher, { through: { model: 'TeacherSubject', unique: false } });
 
 Teacher.hasMany(TeacherSubject);
 TeacherSubject.belongsTo(Teacher);
 
 Subject.hasMany(TeacherSubject);
 TeacherSubject.belongsTo(Subject);
+
+Class.hasMany(TeacherSubject);
+TeacherSubject.belongsTo(Class);

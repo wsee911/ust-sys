@@ -2,9 +2,9 @@ import Express, { RequestHandler } from 'express';
 import { NO_CONTENT } from 'http-status-codes';
 import Logger from '../config/logger';
 import upload from '../config/multer';
+import { TeacherStudent, TeacherSubject, SubjectClass } from '../models';
 import { ClassService, StudentService, SubjectService, TeacherService } from '../service';
 import { convertCsvToJson, isNewValue } from '../utils';
-import { TeacherStudent, TeacherSubject } from '../models';
 
 const DataImportController = Express.Router();
 const LOG = new Logger('DataImportController.js');
@@ -39,12 +39,12 @@ const dataImportHandler: RequestHandler = async (req, res, next) => {
 				continue;
 			}
 			const subjectRes = await subjectService.createSubject(val.subjectName, val.subjectCode);
-			
+
 			if (!subjectRes.created && isNewValue(val.subjectName, "code", subjectRes.subject)) {
 				await subjectService.updateSubject(val.subjectName, val.subjectCode)
 			}
 			const classRes = await classService.createClass(val.className, val.classCode);
-			
+
 			if (!classRes.created && isNewValue(val.className, "code", classRes.classModel)) {
 				await classService.updateClass(val.className, val.classCode)
 			}
@@ -58,23 +58,31 @@ const dataImportHandler: RequestHandler = async (req, res, next) => {
 			if (!studentRes.created && isNewValue(val.studentName, "name", studentRes.student)) {
 				await studentService.updateStudent(val.studentName, val.studentEmail)
 			}
-			if (!studentRes.created && isNewValue(val.classCode, "classCode", studentRes.student )) {
+			if (!studentRes.created && isNewValue(val.classCode, "classCode", studentRes.student)) {
 				await studentService.updateStudentClass(val.classCode, val.studentEmail)
 			}
 
 			await TeacherStudent.findOrCreate({
 				where: {
-					teacherEmail: teacherRes.teacher.getDataValue('email'),
-					studentEmail: studentRes.student.getDataValue('email'),
+					teacherId: teacherRes.teacher.getDataValue('id'),
+					studentId: studentRes.student.getDataValue('id'),
 				}
 			});
 
 			await TeacherSubject.findOrCreate({
 				where: {
-					teacherEmail: teacherRes.teacher.getDataValue('email'),
-					subjectCode: subjectRes.subject.getDataValue('code'),
+					teacherId: teacherRes.teacher.getDataValue('id'),
+					subjectId: subjectRes.subject.getDataValue('id'),
+					classId: classRes.classModel.getDataValue('id'),
 				}
 			});
+
+			// await SubjectClass.findOrCreate({
+			// 	where: {
+			// 		subjectId: subjectRes.subject.getDataValue('id'),
+			// 		classId: classRes.classModel.getDataValue('id'),
+			// 	}
+			// });
 		};
 
 	} catch (err) {
