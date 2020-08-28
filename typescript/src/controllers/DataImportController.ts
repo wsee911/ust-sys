@@ -2,7 +2,7 @@ import Express, { RequestHandler } from 'express';
 import { NO_CONTENT } from 'http-status-codes';
 import Logger from '../config/logger';
 import upload from '../config/multer';
-import { TeacherStudent, TeacherSubject, SubjectClass } from '../models';
+import { TeacherStudent, Workload } from '../models';
 import { ClassService, StudentService, SubjectService, TeacherService } from '../service';
 import { convertCsvToJson, isNewValue } from '../utils';
 
@@ -69,20 +69,13 @@ const dataImportHandler: RequestHandler = async (req, res, next) => {
 				}
 			});
 
-			await TeacherSubject.findOrCreate({
+			await Workload.findOrCreate({
 				where: {
 					teacherId: teacherRes.teacher.getDataValue('id'),
 					subjectId: subjectRes.subject.getDataValue('id'),
 					classId: classRes.classModel.getDataValue('id'),
 				}
 			});
-
-			// await SubjectClass.findOrCreate({
-			// 	where: {
-			// 		subjectId: subjectRes.subject.getDataValue('id'),
-			// 		classId: classRes.classModel.getDataValue('id'),
-			// 	}
-			// });
 		};
 
 	} catch (err) {

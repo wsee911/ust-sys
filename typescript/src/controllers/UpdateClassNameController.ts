@@ -11,8 +11,9 @@ const updateClassNameHandler: RequestHandler = async (req, res, next) => {
     const updatedRes = await classService.updateClass(req.body.className, req.params.classCode);
     if (updatedRes === 1) {
         res.sendStatus(CREATED);
+    } else {
+        res.status(NOT_FOUND).send("class not found or not updated");
     }
-    res.status(NOT_FOUND).send("class not found or not updated");
 }
 
 UpdateClassNameController.put('/class/:classCode', updateClassNameHandler);
