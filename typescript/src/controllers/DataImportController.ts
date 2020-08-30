@@ -1,5 +1,5 @@
 import Express, { RequestHandler } from 'express';
-import { NO_CONTENT, CREATED } from 'http-status-codes';
+import { CREATED, INTERNAL_SERVER_ERROR } from 'http-status-codes';
 import Logger from '../config/logger';
 import upload from '../config/multer';
 import { ClassService, StudentService, SubjectService, TeacherService, TeacherStudentService, WorkloadService } from '../service';
@@ -42,7 +42,7 @@ const dataImportHandler: RequestHandler = async (req, res, next) => {
 
 	} catch (err) {
 		LOG.error(err)
-		return next(err);
+		return res.sendStatus(INTERNAL_SERVER_ERROR);
 	}
 
 	return res.sendStatus(CREATED);
