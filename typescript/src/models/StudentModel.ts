@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
+import { Class } from './ClassModel';
 
 export interface StudentAttr {
 	id: number;
@@ -11,6 +12,7 @@ export class Student extends Model {
 	public id: number;
 	public name!: string;
 	public email!: string;
+	public classCode: string;
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
@@ -32,3 +34,5 @@ Student.init({
 		unique: true,
 	}
 }, { sequelize, modelName: 'student', freezeTableName: true, timestamps: true });
+
+Class.hasMany(Student, { foreignKey: "classCode", sourceKey: "code" });

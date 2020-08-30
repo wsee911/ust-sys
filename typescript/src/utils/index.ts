@@ -2,6 +2,7 @@ import fs from 'fs';
 import csv from 'csv-parser';
 import { CsvItem } from 'CsvItem';
 import { Teacher, Student, Subject, Class } from '../models';
+import { isEmpty } from 'lodash';
 
 
 export const convertCsvToJson = (filePath: string): Promise<CsvItem[]> => {
@@ -14,6 +15,8 @@ export const convertCsvToJson = (filePath: string): Promise<CsvItem[]> => {
     stream.on('error', (err) => reject(err));
   });
 }
+
+export const isParamEmpty = (param: string) => isEmpty(param);
 
 export const isNewValue = (checkVal: string, attr: string, model: Teacher | Student | Subject | Class): boolean => {
 

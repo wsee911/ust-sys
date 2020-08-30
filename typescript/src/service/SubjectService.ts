@@ -1,7 +1,13 @@
 import { Subject } from "../models";
+import { isNewValue } from "../utils";
+
+export interface StudentCreated { 
+	subject: Subject; 
+	created: boolean;
+}
 
 export class SubjectService {
-	public async createSubject(name: string, code: string): Promise<{ subject: Subject, created: boolean }> {
+	public async createSubject(name: string, code: string): Promise<StudentCreated> {
 		const [subject, created] = await Subject.findOrCreate({
 			where: { code },
 			defaults: {
@@ -16,4 +22,12 @@ export class SubjectService {
 		return updatedRows;
 	}
 
+	public async updateOrCreateSubject(subjectName: string, subjectCode: string) {
+		const subjectRes = await this.createSubject(subjectName, subjectCode);
+
+		if (!subjectRes.created && isNewValue(subjectName, "code", subjectRes.subject)) {
+			await this.updateSubject(subjectName, subjectCode)
+		}
+		return subjectRes;
+	}
 }

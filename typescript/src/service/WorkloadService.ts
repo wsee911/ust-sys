@@ -1,6 +1,7 @@
-import sequelize from "../config/database";
 import { QueryTypes } from "sequelize";
 import { WorkloadDBResult, WorkloadReports } from "Workload";
+import sequelize from "../config/database";
+import { Class, Subject, Teacher, Workload } from "../models";
 
 export class WorkloadService {
     public async fetchWorkload() {
@@ -22,6 +23,16 @@ export class WorkloadService {
             });
         });
         return workload;
+    }
+
+    public async createWorkload(teacher: Teacher, subject: Subject, classModel: Class) {
+        await Workload.findOrCreate({
+            where: {
+                teacherId: teacher.getDataValue('id'),
+                subjectId: subject.getDataValue('id'),
+                classId: classModel.getDataValue('id'),
+            }
+        });
     }
 
 }

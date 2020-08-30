@@ -87,4 +87,12 @@ describe("Workload Service", () => {
         const output = await workloadService.fetchWorkload();
         expect(expectedResult).toEqual(output);
     })
+    it("should return nothing if database is empty", async () => {
+
+        const workloadService = new WorkloadService();
+        sequelize.query = jest.fn().mockResolvedValue([]);
+
+        const output = await workloadService.fetchWorkload();
+        expect(output).toBeNull;
+    })
 })
