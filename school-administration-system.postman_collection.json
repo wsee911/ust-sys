@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ba397eb1-db3d-4e2c-91f4-174b4e0ce7f5",
+		"_postman_id": "03d39387-d7a1-48f6-bfda-7db81f153838",
 		"name": "school-administration-system",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -17,7 +17,7 @@
 							"key": "data",
 							"contentType": "multipart/form-data",
 							"type": "file",
-							"src": []
+							"src": "/Users/wayne/Documents/Projects/ust-sys/data.sample.csv"
 						}
 					],
 					"options": {
@@ -86,7 +86,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/students?class=2&offset=1&limit=2",
+					"raw": "localhost:5000/students?class=P1-1&offset=10&limit=10",
 					"host": [
 						"localhost"
 					],
@@ -97,19 +97,99 @@
 					"query": [
 						{
 							"key": "class",
-							"value": "2"
+							"value": "P1-1"
 						},
 						{
 							"key": "offset",
-							"value": "1"
+							"value": "10"
 						},
 						{
 							"key": "limit",
-							"value": "2"
+							"value": "10"
 						}
 					]
 				},
 				"description": "Retrieving student list from external"
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/class/P1-1/students?offset=5&limit=20",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"class",
+						"P1-1",
+						"students"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "5"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Class Name",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"className\": \"BEST CLASS\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/class/P1-1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"class",
+						"P1-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FETCH WORKLOAD REPORT",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/reports/workload",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reports",
+						"workload"
+					]
+				}
 			},
 			"response": []
 		}
